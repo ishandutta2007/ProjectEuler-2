@@ -21,23 +21,38 @@
 # --------------------------------------------------------------------------------------------------------------------------------------------- #
 import time
 
-from euler.numbers import digitsSum
+from euler.primes import is_probable_prime
 
-def isHarshad(n):
-    return not n % digitsSum(n)
+def get_right_truncatable_Harshad_numbers(l):
+    harshad = [[(i, i) for i in range(1, 10)]]
 
-def isRightTruncatableHarshad(n):
-    while n != 0:
-        if not isHarshad(n):
-            return False
+    for le in range(1, l):
+        harshad.append([])
+        for h in harshad[le - 1]:
+            for i in range(10):
+                harshad_candidate = (10 * h[0] + i, h[1] + i)
+                if harshad_candidate[0] % harshad_candidate[1] == 0:
+                    harshad[le].append(harshad_candidate)                
 
-        n //= 10
-
-    return True
-
+    return harshad
+    
 def eu387():
-    print (len([i for i in range(1, 1000000) if isRightTruncatableHarshad(i)]))
-        
+    MAX_LEN = 14 - 1
+    
+    rt_harshad = get_right_truncatable_Harshad_numbers(MAX_LEN)
+    rt_harshad = [i for l in rt_harshad for i in l]
+
+    srt_harshad = [h for h in rt_harshad if ((h[0] // h[1] != 1) and is_probable_prime(h[0] // h[1]))]
+
+    srt_harshad_primes = []
+    for h in srt_harshad:
+        for i in [1, 3, 7, 9]:
+            srt_harshad_prime_candidate = h[0] * 10 + i
+            if is_probable_prime(srt_harshad_prime_candidate):
+                srt_harshad_primes.append(srt_harshad_prime_candidate)
+
+    return sum(srt_harshad_primes)
+
 if __name__ == "__main__":
     startTime = time.clock()
     print (eu387())
