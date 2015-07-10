@@ -11,59 +11,7 @@
 import time
 import math
 
-def isPrime(n):
-    if (n in isPrime.HISTORY):
-        return isPrime.HISTORY[n]
-
-    """ Checks if n is prime """
-    if n < 0:
-        isPrime.HISTORY[n] = False
-        return False
-    
-    if n == 1:
-        isPrime.HISTORY[n] = False
-        return False
-    if n < 4:
-        isPrime.HISTORY[n] = True
-        return True
-    if n % 2 == 0:
-        isPrime.HISTORY[n] = False
-        return False
-    if n < 9:
-        isPrime.HISTORY[n] = True
-        return True
-    if n % 3 == 0:
-        isPrime.HISTORY[n] = False
-        return False
-
-    r = int(math.sqrt(n))
-    c = 5
-
-    while c <= r:
-        if n % c == 0:
-            isPrime.HISTORY[n] = False
-            return False
-        if n % (c + 2) == 0:
-            isPrime.HISTORY[n] = False
-            return False
-        c += 6
-
-    isPrime.HISTORY[n] = True
-    return True
-isPrime.HISTORY = {}
-
-def GenPrimesTo(n):
-    """ Gen list of all primes <= limit """
-    size = n//2
-    sieve = [1]*size
-    limit = int(n**0.5)
-    
-    for i in range(1,limit):
-        if sieve[i]:
-            val = 2*i+1
-            tmp = ((size-1) - i)//val 
-            sieve[i+val::val] = [0]*tmp
-    return [2] + [i*2+1 for i, v in enumerate(sieve) if v and i>0]
+from euler.primes import is_prime_with_history, prime_sieve
 
 def addToSet(primesPairSet, p):
     l1 = 1
@@ -75,7 +23,7 @@ def addToSet(primesPairSet, p):
         tmp //= 10
     
     for prime in primesPairSet:
-        if (not isPrime(prime * l1 + p)):
+        if (not is_prime_with_history(prime * l1 + p)):
             return False
         
         tmp = prime
@@ -84,31 +32,33 @@ def addToSet(primesPairSet, p):
             l2 *= 10
             tmp //= 10
 
-        if (not isPrime(p * l2 + prime)):
+        if (not is_prime_with_history(p * l2 + prime)):
             return False
 
     return True
 
 def genPrimesPairSet(primes, size, primesPairSet):
     if (size == 0):
-        print (sum(primesPairSet))
-        return True
+        return True, sum(primesPairSet)
 
     for p in primes:
         if (addToSet(primesPairSet, p)):
-            if (genPrimesPairSet(primes, size - 1, primesPairSet + [p])):
-                return True
+            ret = genPrimesPairSet(primes, size - 1, primesPairSet + [p])
+            if (ret[0]):
+                return True, ret[1]
+
+    return False, 0
             
 def eu60():
     TOP = 10000
     FAMILY_SIZE = 5
 
-    primes = GenPrimesTo(TOP)
-    isPrime.HISTORY = dict([(i, False) for i in range(TOP)])
+    primes = prime_sieve(TOP)
+    is_prime_with_history.HISTORY = dict([(i, False) for i in range(TOP)])
     for p in primes:
-        isPrime.HISTORY[p] = True
+        is_prime_with_history.HISTORY[p] = True
 
-    return genPrimesPairSet(primes, FAMILY_SIZE, [])
+    return genPrimesPairSet(primes, FAMILY_SIZE, [])[1]
 
 if __name__ == "__main__":
     startTime = time.clock()
