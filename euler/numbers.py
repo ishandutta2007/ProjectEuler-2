@@ -79,6 +79,15 @@ def get_divisors(n, with_negative=False):
         
     return sorted(divisors)
 
+def log_floor(n, base):
+    r = 0
+
+    while n >= base:
+        r += 1
+        n //= base
+
+    return r
+
 def is_permutation(n1, n2):
     if (n1 - n2) % 9 != 0: # fast reject
         return False
