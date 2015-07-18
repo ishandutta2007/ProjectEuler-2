@@ -56,5 +56,7 @@ docs/_build/
 # PyBuilder
 target/
 
-# Under construction
+# Under construction & Private files
 tmp/
+Account - Project Euler - Recovery Key_files/
+*.html
