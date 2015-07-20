@@ -36,7 +36,34 @@ def get_distinct_factors(n):
     """Return the discinct factors of natural number.
 
     """
+    
     return set(factorize(n))
+
+def is_square_free(number):
+    """Check if a number is square free
+
+    """    
+    if (number in factorize.MEMORY):
+        return factorize.MEMORY[number]
+
+    if number % 4 == 0:
+        is_square_free.MEMORY[number] = False
+        
+        return False
+
+    for n in range(3, int(number ** 0.5) + 1):
+        if number % n == 0:
+            number //= n
+
+        if number % n == 0:
+            is_square_free.MEMORY[number] = False
+            
+            return False
+
+    is_square_free.MEMORY[number] = True
+
+    return True        
+is_square_free.MEMORY = { 1: True }
 
 def radical(n):
     """Return the radical of natural number.
