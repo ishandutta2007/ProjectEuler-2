@@ -13,4 +13,21 @@ def gradient_descent(f, a, b):
         x_old = x_new
         x_new = x_old - f_derivative(x_old) * gamma
 
-    return x_new 
+    return x_new
+
+def Newton_Raphson(f, x_0, e):
+    '''Return root of 'f' near x_0'''
+    def f_derivative(x):
+        epsilon = 1e-5
+        
+        return (f(x + epsilon) - f(x)) / epsilon
+        
+    x_n = x_0
+
+    delta = f(x_n) / f_derivative(x_n)
+    
+    while abs(delta) >= e:
+        x_n = x_n - delta
+        delta = f(x_n) / f_derivative(x_n)
+
+    return x_n 
