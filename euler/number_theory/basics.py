@@ -40,6 +40,6 @@ def eea(a, b):
 def modular_multiplicative_inverse(a, p):
     x, y, g = eea(a, p)
     if g == 1:
-        return x
+        return (x if x > 0 else (x + p))
     else:
         return 0
