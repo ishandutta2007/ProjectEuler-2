@@ -77,6 +77,20 @@ def radical(n):
 
     return r
 
+def radical_sieve(n):
+    numbers = [i for i in range(n + 1)]
+    radicals = [1 for _ in range(n + 1)]
+    
+    for i in range(2, n + 1):
+        if numbers[i] == i:
+            for j in range(i, n + 1, i):
+                while numbers[j] % i == 0:
+                    numbers[j] //= i
+
+                radicals[j] *= i
+
+    return radicals
+
 def get_divisors(n, with_negative=False):
     """Return all the divisors of a number.
 
