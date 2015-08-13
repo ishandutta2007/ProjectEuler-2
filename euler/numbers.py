@@ -188,3 +188,20 @@ def digital_root_consecutive(n):
 
 def is_digit_fifth_power_number(n):
     return (n == sum([int(d) ** 5 for d in str(n)]))
+
+def to_base(n, b):
+    if b > 20:
+        return
+    
+    s = ''
+    
+    while n != 0:
+        d = n % b
+        if d >= 10:
+            s += chr(ord('a') + d - 10)
+        else:
+            s += chr(ord('0') + d)
+
+        n //= b
+
+    return ''.join(reversed(s))
