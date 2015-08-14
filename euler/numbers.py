@@ -191,17 +191,23 @@ def is_digit_fifth_power_number(n):
 
 def to_base(n, b):
     if b > 20:
-        return
-    
-    s = ''
-    
-    while n != 0:
-        d = n % b
-        if d >= 10:
-            s += chr(ord('a') + d - 10)
-        else:
-            s += chr(ord('0') + d)
+        s = []
 
-        n //= b
+        while n != 0:
+            s.append(n % b)
+            n //= b
+    else:
+        s = ''
+        
+        while n != 0:
+            d = n % b
+            if d >= 10:
+                s += chr(ord('a') + d - 10)
+            else:
+                s += chr(ord('0') + d)
 
-    return ''.join(reversed(s))
+            n //= b
+
+        s = ''.join(reversed(s))
+
+    return s
