@@ -129,3 +129,14 @@ def is_probable_prime(n, _precision_for_huge_n = 8):
                    for a in is_probable_prime._known_primes[:_precision_for_huge_n])
 is_probable_prime._known_primes = [2, 3]
 is_probable_prime._known_primes += [x for x in range(5, 5000, 2) if is_probable_prime(x)]
+
+def next_prime(n):
+    """ Returns the next prime after 'n'"""
+    r = n + 1
+    if r % 2 == 0:
+        r += 1
+
+    while not is_probable_prime(r):
+        r += 1
+
+    return r
