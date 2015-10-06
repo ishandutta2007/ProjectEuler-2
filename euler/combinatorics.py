@@ -1,6 +1,9 @@
 def nCk(n, k):
-    k = min(k, n - k)
+    if n < k:
+        return 0
 
+    k = min(k, n - k)
+    
     m = 1
     d = 1
 
