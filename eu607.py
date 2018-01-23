@@ -13,7 +13,7 @@
 #       If Frodo and Sam were to head directly East for point B, they would travel exactly 100 leagues, and the journey would                   #
 #       take approximately 13.4738 days. However, this time can be shortened if they deviate from the direct path.                              #
 #                                                                                                                                               #
-#       Find the shortest possible time required to travel from point A to B, and give your answer in days, rounded to 10 decimal places.       #                                                                                  #
+#       Find the shortest possible time required to travel from point A to B, and give your answer in days, rounded to 10 decimal places.       #
 # --------------------------------------------------------------------------------------------------------------------------------------------- #
 import time
 
